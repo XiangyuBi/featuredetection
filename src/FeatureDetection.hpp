@@ -11,10 +11,14 @@
 
 
 class FeatureDetection {
-    FeatureDetection() = default;
+    FeatureDetection() = delete;
+    explicit FeatureDetection(const char* plyname);
+
 public:
     static pcl::PointCloud<pcl::PointXYZRGBA>::Ptr readPLYFile(const char* plyname);
 
+private:
+    pcl::PointCloud<pcl::PointXYZRGBA>::Ptr origin;
 
 
 };
@@ -37,6 +41,10 @@ pcl::PointCloud<pcl::PointXYZRGBA>::Ptr FeatureDetection::readPLYFile(const char
 */
     return cloud;
 
+}
+
+FeatureDetection::FeatureDetection(const char *plyname) {
+    origin = readPLYFile(plyname);
 }
 
 
