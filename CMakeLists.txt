@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(X_ray_trial)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB_RECURSE sources src/*.cpp featuredetection/src/*.hpp)
 add_executable(X_ray_trial main.cpp ${sources})

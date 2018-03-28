@@ -6,7 +6,8 @@ using namespace std;
 int main()
 {
 	string file =  "/home/xib008/workspace/X-ray-project/test.ply";
-	auto cloud = FeatureDetection::readPLYFile(file.c_str());
+    auto f = FeatureDetection(file.c_str());
+    f.viewRGB();
 
 	return 0;
 }
