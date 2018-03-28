@@ -1,0 +1,3 @@
+/home/xib008/workspace/X-ray-project/featuredetection/build/CMakeFiles/edit_cache.dir
+/home/xib008/workspace/X-ray-project/featuredetection/build/CMakeFiles/rebuild_cache.dir
+/home/xib008/workspace/X-ray-project/featuredetection/build/CMakeFiles/X_ray_trial.dir
