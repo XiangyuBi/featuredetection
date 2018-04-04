@@ -1,13 +1,15 @@
 #include "src/FeatureDetection.hpp"
 #include <string>
 
-using namespace std;
+
 
 int main()
 {
-	string file =  "/home/xib008/workspace/X-ray-project/test.ply";
-    auto f = FeatureDetection(file.c_str());
-    f.viewRGB();
+	std::string file =  "/home/xib008/workspace/X-ray-project/globalnrregistrationbaseline/Dec_0004filtered.ply";
+	std::cout << "T" << std::endl;
+	auto f = FeatureDetection(file.c_str());
+//	std::cout << "Read fly" << std::endl;
+	f.viewNarfKeyPoints();
 
 	return 0;
 }

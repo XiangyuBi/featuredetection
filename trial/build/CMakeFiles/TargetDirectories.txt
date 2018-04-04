@@ -1,0 +1,3 @@
+/home/xib008/workspace/X-ray-project/featuredetection/trial/build/CMakeFiles/edit_cache.dir
+/home/xib008/workspace/X-ray-project/featuredetection/trial/build/CMakeFiles/rebuild_cache.dir
+/home/xib008/workspace/X-ray-project/featuredetection/trial/build/CMakeFiles/pcl_visualizer_demo.dir

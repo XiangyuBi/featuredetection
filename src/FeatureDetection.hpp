@@ -95,6 +95,8 @@ public:
 
 
 
+	FeatureDetection& viewPoints();
+
 private:
     pcl::PointCloud<pcl::PointXYZRGBA>::Ptr origin;
 
@@ -103,12 +105,26 @@ private:
 
 FeatureDetection::FeatureDetection(const char *plyname) {
     try {
+		std::cout << "Reading PLY:" << plyname << std::endl;
         origin = VisUtil::readPLYFile(plyname);
     }
     catch(const char*)
     {
         std::cout << "Cannot Open ply file: " << plyname << std::endl;}
 }
+
+FeatureDetection &FeatureDetection::viewPoints()
+{
+	for(size_t i = 0; i < origin->points.size(); ++i)
+	{
+		std::cout << "Point coor: " 
+				<< origin->points[i].x << " "
+				<< origin->points[i].y << " "
+				<< origin->points[i].z << std::endl;
+	}
+	return *this;
+}
+
 
 FeatureDetection &FeatureDetection::viewRGB() {
     VisUtil::visualize(origin);
