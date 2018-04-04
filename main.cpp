@@ -9,7 +9,7 @@ int main()
 	std::cout << "T" << std::endl;
 	auto f = FeatureDetection(file.c_str());
 //	std::cout << "Read fly" << std::endl;
-	f.viewNarfKeyPoints();
+	f.viewISSKeyPoints();
 
 	return 0;
 }

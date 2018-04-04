@@ -13,7 +13,7 @@
 #include <pcl/keypoints/narf_keypoint.h>
 #include <pcl/visualization/range_image_visualizer.h>
 #include <pcl/keypoints/iss_3d.h>
-#include <synchapi.h>
+//#include <synchapi.h>
 
 class NarfFeature{
 public:
@@ -24,7 +24,7 @@ public:
     NarfFeature& keyPointExtractor();
 
 private:
-    pcl::PointCloud<pcl::PointXYZ> cloud;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud;
 
 
 };
@@ -83,7 +83,6 @@ NarfFeature &NarfFeature::keyPointExtractor() {
 NarfFeature::NarfFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
         : cloud(cloud)
 {
-
 }
 
 
@@ -153,7 +152,7 @@ ISSFeature &ISSFeature::viewISSFeatures() {
     detector.compute(*keypoints);
 
     VisUtil::visualizeWithFeture(cloud, keypoints);
-    
+
     return *this;
 }
 
@@ -168,6 +167,7 @@ public:
     explicit FeatureDetection(const char* plyname);
     FeatureDetection& viewRGB();
     FeatureDetection& viewNarfKeyPoints();
+    FeatureDetection& viewISSKeyPoints();
 
 
 
@@ -214,7 +214,11 @@ FeatureDetection &FeatureDetection::viewNarfKeyPoints() {
 
 }
 
-
+FeatureDetection &FeatureDetection::viewISSKeyPoints() {
+    auto iss = std::shared_ptr<ISSFeature>(new ISSFeature(origin));
+    iss->viewISSFeatures();
+    return <#initializer#>;
+}
 
 
 #endif //X_RAY_TRIAL_FEATUREDETECTION_HPP
