@@ -20,18 +20,21 @@ unsigned int text_id = 0;
 struct VisUtil
 {
    // unsigned int text_id = 0;
-    static pcl::PointCloud<pcl::PointXYZRGBA>::Ptr readPLYFile(const char* plyname);
+    static pcl::PointCloud<pcl::PointXYZRGBA>::Ptr readPLY_RGB(const char* plyname);
+    static pcl::PointCloud<pcl::PointXYZ>::Ptr readPLY_XYZ(const char* plyname);
+    static std::shared_ptr<pcl::visualization::PCLVisualizer> visualizeXYZCloud(pcl::PointCloud<pcl::PointXYZ>::ConstPtr cloud);
     static std::shared_ptr<pcl::visualization::PCLVisualizer> visualizeRGBCloud(pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr cloud);
     static void keyboardEventOccurred(const pcl::visualization::KeyboardEvent &event, void* viewer_void);
     static void mouseEventOccurred (const pcl::visualization::MouseEvent &event, void* viewer_void);
     static std::shared_ptr<pcl::visualization::PCLVisualizer> interactionCustomizationVis();
-    static void visualize(pcl::PointCloud<pcl::PointXYZRGBA>::Ptr cloud);
-
+    static void visualize(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
+    static void visualizeWithFeture(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
+                                    const pcl::PointCloud<pcl::PointXYZ>::Ptr &keypoints);
 
 
 };
 
-pcl::PointCloud<pcl::PointXYZRGBA>::Ptr VisUtil::readPLYFile(const char *plyname){
+pcl::PointCloud<pcl::PointXYZRGBA>::Ptr VisUtil::readPLY_RGB(const char *plyname){
 
     pcl::PointCloud<pcl::PointXYZRGBA>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGBA>);
     if(pcl::io::loadPLYFile<pcl::PointXYZRGBA>(plyname, *cloud) == -1)
@@ -45,6 +48,7 @@ pcl::PointCloud<pcl::PointXYZRGBA>::Ptr VisUtil::readPLYFile(const char *plyname
     return cloud;
 
 }
+
 
 
 std::shared_ptr<pcl::visualization::PCLVisualizer>
@@ -99,15 +103,65 @@ std::shared_ptr<pcl::visualization::PCLVisualizer> VisUtil::interactionCustomiza
 
     return (viewer);}
 
-void VisUtil::visualize(pcl::PointCloud<pcl::PointXYZRGBA>::Ptr cloud) {
+void VisUtil::visualize(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud) {
     
 	using namespace std::chrono_literals;
-    auto viewer = visualizeRGBCloud(cloud);
+    auto viewer = visualizeXYZCloud(cloud);
     while(!viewer->wasStopped())
     {
         viewer->spinOnce(100);
         std::this_thread::sleep_for(10s);
     }
 }
+
+std::shared_ptr<pcl::visualization::PCLVisualizer>
+VisUtil::visualizeXYZCloud(pcl::PointCloud<pcl::PointXYZ>::ConstPtr cloud) {
+    std::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+    viewer->setBackgroundColor (0, 0, 0);
+    viewer->addPointCloud<pcl::PointXYZ> (cloud, "sample cloud");
+    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud");
+    viewer->addCoordinateSystem (1.0);
+    viewer->initCameraParameters ();
+    return (viewer);
+
+}
+
+void VisUtil::visualizeWithFeture(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
+                                  const pcl::PointCloud<pcl::PointXYZ>::Ptr &keypoints) {
+    using namespace std::chrono_literals;
+
+    if (keypoints->points.size() == 0)
+    {
+        std::cerr << "No features to show" << std::endl;
+        return;
+    }
+    auto viewer = visualizeXYZCloud(cloud);
+    int idx = 0;
+    for(size_t i = 0; i < keypoints->points.size(); ++i) {
+     //   idx = keypoints->points[i];
+        viewer->addSphere(keypoints->points[i], 0.2, 0.5, 0.5, 0.0, "sphere");
+    }
+
+    while(!viewer->wasStopped())
+    {
+        viewer->spinOnce(100);
+        std::this_thread::sleep_for(10s);
+    }
+
+}
+
+pcl::PointCloud<pcl::PointXYZ>::Ptr VisUtil::readPLY_XYZ(const char *plyname) {
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    if(pcl::io::loadPLYFile<pcl::PointXYZ>(plyname, *cloud) == -1)
+    {       throw("Cannot open ply file...");}
+
+    std::cout << "Loaded "
+              << cloud->width * cloud->height
+              << " data points from test.ply"
+              << std::endl;
+
+    return cloud;
+}
+
 
 #endif //X_RAY_TRIAL_VISUTIL_HPP
