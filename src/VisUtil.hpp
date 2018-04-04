@@ -20,7 +20,7 @@ struct VisUtil
 {
     static unsigned int text_id = 0;
     static pcl::PointCloud<pcl::PointXYZRGBA>::Ptr readPLYFile(const char* plyname);
-    static std::shared_ptr<pcl::visualization::PCLVisualizer> visualizeRGBCloud(pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr cloud);
+    static std::shared_ptr<pcl::visualization::PCLVisualizer> visualizeRGBCloud(pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr &cloud);
     static void keyboardEventOccurred(const pcl::visualization::KeyboardEvent &event, void* viewer_void);
     static void mouseEventOccurred (const pcl::visualization::MouseEvent &event, void* viewer_void);
     static std::shared_ptr<pcl::visualization::PCLVisualizer> interactionCustomizationVis();
@@ -47,7 +47,7 @@ pcl::PointCloud<pcl::PointXYZRGBA>::Ptr VisUtil::readPLYFile(const char *plyname
 
 
 std::shared_ptr<pcl::visualization::PCLVisualizer>
-VisUtil::visualizeRGBCloud(pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr cloud) {
+VisUtil::visualizeRGBCloud(pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr &cloud) {
     std::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer ("3D Viewer"));
     viewer->setBackgroundColor(0, 0, 0);
     pcl::visualization::PointCloudColorHandlerRGBField<pcl::PointXYZRGBA> rgb(cloud);
@@ -99,6 +99,7 @@ std::shared_ptr<pcl::visualization::PCLVisualizer> VisUtil::interactionCustomiza
     return (viewer);}
 
 void VisUtil::visualize(pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &cloud) {
+    
     auto viewer = visualizeRGBCloud(cloud);
     while(!viewer->wasStopped())
     {
