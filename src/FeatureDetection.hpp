@@ -6,6 +6,10 @@
 #define X_RAY_TRIAL_FEATUREDETECTION_HPP
 
 #include "VisUtil.hpp"
+#include <pcl/point_cloud.h>
+#include <pcl/kdtree/kdtree_flann.h>
+#include <vector>
+#include <ctime>
 #include <pcl/features/normal_3d.h>
 #include <pcl/range_image/range_image.h>
 #include <pcl/range_image/range_image_planar.h>
@@ -14,6 +18,7 @@
 #include <pcl/visualization/range_image_visualizer.h>
 #include <pcl/keypoints/iss_3d.h>
 //#include <synchapi.h>
+
 
 class NarfFeature{
 public:
@@ -151,8 +156,23 @@ ISSFeature &ISSFeature::viewISSFeatures() {
     detector.setNumberOfThreads(4);
     detector.compute(*keypoints);
 
-    VisUtil::visualizeWithFeture(cloud, keypoints);
+    pcl::KdTreeFLANN<pcl::PointXYZ> kdtree2;
+    kdtree2.setInputCloud (cloud);
 
+    int K = 1;
+    pcl::PointCloud<int>::Ptr indices;
+
+    std::vector<int> pointIdxNKNSearch(K);
+    std::vector<float> pointNKNSquaredDistance(K);
+
+    for(size_t i = 0; i < keypoints->points.size(); i++) {
+        auto searchPoint = keypoints->points[i];
+        if (kdtree2.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance) > 0) {
+            indices->push_back(pointIdxNKNSearch[0]);
+            std::cout << "Indice: " << pointIdxNKNSearch[i] << std::endl;
+        }
+    }
+//    VisUtil::visualizeWithFeture(cloud, keypoints);
     return *this;
 }
 
