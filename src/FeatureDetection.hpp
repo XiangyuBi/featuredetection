@@ -217,7 +217,7 @@ FeatureDetection &FeatureDetection::viewNarfKeyPoints() {
 FeatureDetection &FeatureDetection::viewISSKeyPoints() {
     auto iss = std::shared_ptr<ISSFeature>(new ISSFeature(origin));
     iss->viewISSFeatures();
-    return <#initializer#>;
+    return *this;
 }
 
 

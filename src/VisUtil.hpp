@@ -137,14 +137,22 @@ void VisUtil::visualizeWithFeture(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
     }
     auto viewer = visualizeXYZCloud(cloud);
     int idx = 0;
+	std::cout << "Load features:" << keypoints->points.size() << std:: endl;
     for(size_t i = 0; i < keypoints->points.size(); ++i) {
-     //   idx = keypoints->points[i];
-        viewer->addSphere(keypoints->points[i], 0.2, 0.5, 0.5, 0.0, "sphere");
+     // 
+	 //   idx = keypoints->points[i];
+	 	std::cout << "Feature detected:  "
+				<< keypoints->points[i].x
+				<< "  " << keypoints->points[i].y 
+				<< "  " << keypoints->points[i].z
+				<< std::endl;
+		std::string name = "sphere" + std::to_string(i);		
+        viewer->addSphere(keypoints->points[i], 0.007, 0.5, 0.5, 0.0, name);
     }
 
     while(!viewer->wasStopped())
     {
-        viewer->spinOnce(100);
+        viewer->spinOnce(1000);
         std::this_thread::sleep_for(10s);
     }
 
