@@ -13,8 +13,18 @@ string
 -
 
 /home/xib008/workspace/X-ray-project/featuredetection/src/FeatureDetection.hpp
+stdlib.h
+-
 VisUtil.hpp
 /home/xib008/workspace/X-ray-project/featuredetection/src/VisUtil.hpp
+pcl/point_cloud.h
+-
+pcl/kdtree/kdtree_flann.h
+-
+vector
+-
+ctime
+-
 pcl/features/normal_3d.h
 -
 pcl/range_image/range_image.h

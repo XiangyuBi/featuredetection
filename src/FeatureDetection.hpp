@@ -4,7 +4,7 @@
 
 #ifndef X_RAY_TRIAL_FEATUREDETECTION_HPP
 #define X_RAY_TRIAL_FEATUREDETECTION_HPP
-
+#include <stdlib.h>
 #include "VisUtil.hpp"
 #include <pcl/point_cloud.h>
 #include <pcl/kdtree/kdtree_flann.h>
@@ -160,8 +160,8 @@ ISSFeature &ISSFeature::viewISSFeatures() {
     kdtree2.setInputCloud (cloud);
 
     int K = 1;
-    pcl::PointCloud<int>::Ptr indices;
-
+  //  pcl::PointCloud<int>::Ptr indices;
+	auto indices = std::make_shared<std::vector<int>>();
     std::vector<int> pointIdxNKNSearch(K);
     std::vector<float> pointNKNSquaredDistance(K);
 
@@ -169,9 +169,13 @@ ISSFeature &ISSFeature::viewISSFeatures() {
         auto searchPoint = keypoints->points[i];
         if (kdtree2.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance) > 0) {
             indices->push_back(pointIdxNKNSearch[0]);
-            std::cout << "Indice: " << pointIdxNKNSearch[i] << std::endl;
+           // std::cout << "Indice: " << pointIdxNKNSearch[0] << std::endl;
         }
     }
+	int indicesEx = 50;
+	for(int t = 0; t < indicesEx; t++)
+			std::cout <<(*indices)[rand() % indices->size()] << std::endl;
+
 //    VisUtil::visualizeWithFeture(cloud, keypoints);
     return *this;
 }
