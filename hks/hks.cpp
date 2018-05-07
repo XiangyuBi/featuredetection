@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include <pcl/io/pcd_io.h>
+#include <pcl/io/ply_io.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/features/normal_3d.h>
 #include <pcl/visualization/pcl_visualizer.h>
@@ -60,12 +60,13 @@ float shortRainbowColorMap(const float value, const float min, const float max) 
 
     
 int main(int argc, char *argv[]) {
-
+	std::cout << 1 << std::endl;
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::Normal>::Ptr normals(new pcl::PointCloud<pcl::Normal>);
 
-    pcl::io::loadPCDFile<pcl::PointXYZ>("../models/bunny.pcd", *cloud);
-
+    if(pcl::io::loadPLYFile<pcl::PointXYZ>("/home/xib008/workspace/X-ray-project/globalnrregistrationbaseline/Dec_0004filtered.ply", *cloud)==-1)
+	{	throw("error"); }
+	std::cout << 1 << std::endl;
     // Create the KdTree
     pcl::search::KdTree<pcl::PointXYZ>::Ptr kdt(new pcl::search::KdTree<pcl::PointXYZ>());
     kdt->setInputCloud(cloud);
