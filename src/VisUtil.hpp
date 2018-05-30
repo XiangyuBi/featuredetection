@@ -6,6 +6,7 @@
 #define X_RAY_TRIAL_VISUTIL_HPP
 
 #include<pcl/io/ply_io.h>
+#include <pcl/io/obj_io.h>
 #include <pcl/point_types.h>
 #include <pcl/common/common_headers.h>
 #include <pcl/visualization/pcl_visualizer.h>
@@ -22,6 +23,7 @@ struct VisUtil
    // unsigned int text_id = 0;
     static pcl::PointCloud<pcl::PointXYZRGBA>::Ptr readPLY_RGB(const char* plyname);
     static pcl::PointCloud<pcl::PointXYZ>::Ptr readPLY_XYZ(const char* plyname);
+	static pcl::PointCloud<pcl::PointXYZ>::Ptr readOBJ_XYZ(const char* objname);
     static std::shared_ptr<pcl::visualization::PCLVisualizer> visualizeXYZCloud(pcl::PointCloud<pcl::PointXYZ>::ConstPtr cloud);
     static std::shared_ptr<pcl::visualization::PCLVisualizer> visualizeRGBCloud(pcl::PointCloud<pcl::PointXYZRGBA>::ConstPtr cloud);
     static void keyboardEventOccurred(const pcl::visualization::KeyboardEvent &event, void* viewer_void);
@@ -40,10 +42,10 @@ pcl::PointCloud<pcl::PointXYZRGBA>::Ptr VisUtil::readPLY_RGB(const char *plyname
     if(pcl::io::loadPLYFile<pcl::PointXYZRGBA>(plyname, *cloud) == -1)
 	 {       throw("Cannot open ply file...");}
 
-    std::cout << "Loaded "
-              << cloud->width * cloud->height
-              << " data points from test.ply"
-              << std::endl;
+   // std::cout << "Loaded "
+     //         << cloud->width * cloud->height
+       //       << " data points from test.ply"
+         //     << std::endl;
 
     return cloud;
 
@@ -172,5 +174,16 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr VisUtil::readPLY_XYZ(const char *plyname) {
     return cloud;
 }
 
+pcl::PointCloud<pcl::PointXYZ>::Ptr VisUtil::readOBJ_XYZ(const char* objname){
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+	if(pcl::io::loadOBJFile<pcl::PointXYZ>(objname, *cloud) == -1)
+	{
+			throw("Cannot open obj file...");}
+	    // std::cout << "Loaded "
+	      //         << cloud->width * cloud->height
+	        //       << " data points from test.ply"
+	        //       << std::endl;
+	return cloud;
+}
 
 #endif //X_RAY_TRIAL_VISUTIL_HPP

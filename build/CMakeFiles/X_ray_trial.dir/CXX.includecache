@@ -43,6 +43,8 @@ pcl/keypoints/iss_3d.h
 /home/xib008/workspace/X-ray-project/featuredetection/src/VisUtil.hpp
 pcl/io/ply_io.h
 -
+pcl/io/obj_io.h
+-
 pcl/point_types.h
 -
 pcl/common/common_headers.h
@@ -1966,6 +1968,16 @@ sstream
 pcl/PolygonMesh.h
 -
 pcl/TextureMesh.h
+-
+
+/usr/include/pcl-1.7/pcl/io/obj_io.h
+pcl/pcl_macros.h
+-
+pcl/TextureMesh.h
+-
+pcl/PolygonMesh.h
+-
+pcl/io/file_io.h
 -
 
 /usr/include/pcl-1.7/pcl/io/ply/byte_order.h

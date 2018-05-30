@@ -143,11 +143,11 @@ ISSFeature &ISSFeature::viewISSFeatures() {
     detector.setSearchMethod(kdtree);
     double resolution = computeCloudResolution(cloud);
     // Set the radius of the spherical neighborhood used to compute the scatter matrix.
-    detector.setSalientRadius(6 * resolution);
+    detector.setSalientRadius(3 * resolution);
     // Set the radius for the application of the non maxima supression algorithm.
-    detector.setNonMaxRadius(4 * resolution);
+    detector.setNonMaxRadius(2 * resolution);
     // Set the minimum number of neighbors that has to be found while applying the non maxima suppression algorithm.
-    detector.setMinNeighbors(5);
+    detector.setMinNeighbors(3);
     // Set the upper bound on the ratio between the second and the first eigenvalue.
     detector.setThreshold21(0.975);
     // Set the upper bound on the ratio between the third and the second eigenvalue.
@@ -172,11 +172,13 @@ ISSFeature &ISSFeature::viewISSFeatures() {
            // std::cout << "Indice: " << pointIdxNKNSearch[0] << std::endl;
         }
     }
-	int indicesEx = 50;
+//	std::cout << "size" << indices->size() << std::endl;
+	int indicesEx = 150;
 	for(int t = 0; t < indicesEx; t++)
 			std::cout <<(*indices)[rand() % indices->size()] << std::endl;
-
-//    VisUtil::visualizeWithFeture(cloud, keypoints);
+//	for (int t = 0; t < indices->size(); t++)
+//			std::cout << (*indices)[t] << std::endl;
+   VisUtil::visualizeWithFeture(cloud, keypoints);
     return *this;
 }
 
@@ -205,8 +207,9 @@ private:
 
 FeatureDetection::FeatureDetection(const char *plyname) {
     try {
-		std::cout << "Reading PLY:" << plyname << std::endl;
-        origin = VisUtil::readPLY_XYZ(plyname);
+//		std::cout << "Reading PLY:" << plyname << std::endl;
+        origin = VisUtil::readOBJ_XYZ(plyname);
+//		std::cout << "Read Done" << std::endl;
     }
     catch(const char*)
     {

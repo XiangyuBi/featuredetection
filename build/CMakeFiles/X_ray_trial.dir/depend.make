@@ -331,6 +331,7 @@ CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/impl/pcl_base.hp
 CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/impl/point_types.hpp
 CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/io/boost.h
 CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/io/file_io.h
+CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/io/obj_io.h
 CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/io/ply/byte_order.h
 CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/io/ply/io_operators.h
 CMakeFiles/X_ray_trial.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/io/ply/ply.h
